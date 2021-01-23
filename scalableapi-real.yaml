@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scaleableapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: scaleableapi
+  template:
+    metadata:
+      labels:
+        app: scaleableapi
+    spec:
+      containers:
+      - name: scaleableapi
+        image: hyperioxx/scalableapi:latest
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 350m
+          requests:
+            cpu: 100m
+        env:
+        - name: DATABASE_USERNAME
+          value: "trustyMare9"
+        - name: DATABASE_PASSWORD
+          value: "8svdAn3FREyW4SCqgONOCA"
+        - name: DATABASE_NAME
+          value: "postgres"
+        - name: DATABASE_HOST
+          value: "server581691917.postgres.database.azure.com"
+     
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-svc
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8000
+  selector:
+    app: scaleableapi

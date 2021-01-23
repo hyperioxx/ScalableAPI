@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scaleableapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: scaleableapi
+  template:
+    metadata:
+      labels:
+        app: scaleableapi
+    spec:
+      containers:
+      - name: scaleableapi
+        image: hyperioxx/scalableapi:latest
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 350m
+          requests:
+            cpu: 100m
+        env:
+        - name: SECRET_KEY
+          value: "{fill in stuff here}"
+        - name: DATABASE_HOST
+          value: "{fill in stuff here}"
+        - name: DATABASE_USERNAME
+          value: "{fill in stuff here}"
+        - name: DATABASE_PASSWORD
+          value: "{fill in stuff here}"
+        - name: DATABASE_NAME
+          value: "{fill in stuff here}"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-svc
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8000
+  selector:
+    app: scaleableapi
