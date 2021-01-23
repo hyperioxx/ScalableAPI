@@ -13,5 +13,5 @@ python3 manage.py test --settings=app.settings_testing
 
 The app is scaled horizontially and traffic is distributed using a Loadbalancer, Kubernetes HPA (Horizontal Pod Autoscaler) is used to scale to demand 
 
+![Arch](https://raw.githubusercontent.com/hyperioxx/ScalableAPI/master/assets/scalableapi.png "Arch")
 
-https://raw.githubusercontent.com/hyperioxx/ScalableAPI/main/assets/scalableapi.png
